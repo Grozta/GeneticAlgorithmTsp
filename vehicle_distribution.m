@@ -3,6 +3,9 @@ function [ vehicle_count ] = vehicle_distribution( all_info_data )
 %   此处显示详细说明
 global vehicle;
 vehicle_count = 0;
+if isempty(all_info_data)
+    return ;
+end
 demand_count = size(all_info_data,1);
 total_demend = 0;
 

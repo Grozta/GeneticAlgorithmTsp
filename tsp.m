@@ -56,8 +56,6 @@ else
         for j = 1 : n
             %DLn(i,j) = abs(city_pos.data(i,1)-city_pos.data(j,1))*141490 + abs(city_pos.data(i,2)-city_pos.data(j,2))*110000;
             % DLn(i,j) = real_cost(i ,j, n)*10 + LTcost(j);
-            disp(i);
-            disp(j);
             DLn(i,j) = real_cost(i ,j, n,unit_cost) + LTcost(j);
             % ¾­Î³¶È×ª»»
         end

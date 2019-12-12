@@ -4,9 +4,9 @@ function [ cur_info,remain_info] = route_devided( all_info_data )
 global vehicle;
 global center_position;
 %  ---- 不安全------
-
-
-
+if isempty(vehicle)||isempty(center_position)||isempty(all_info_data)
+    return;
+end
 %  ---- 不安全------
 demand_count = size(all_info_data,1);
 add_head_col= (1:demand_count)';
@@ -45,10 +45,10 @@ end
  end
  flag = 1;
  while true
-     if vehicle_capatity - new_all_info_data(flag, 4)>= 0 
-         flag  = flag +1;
+     if flag <= size(new_all_info_data, 1) && vehicle_capatity - new_all_info_data(flag, 4)>= 0   
          vehicle_capatity = vehicle_capatity - new_all_info_data(flag, 4);
-         if flag > 50
+         flag  = flag +1;
+         if flag > size(new_all_info_data, 1)
              break;
          end
      else

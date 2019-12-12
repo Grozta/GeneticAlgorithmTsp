@@ -1,5 +1,5 @@
 
-function judge = GaTSP(CityNum, inn, gnMax, crossProb,muteProb,unit_cost) 
+function best_route = GaTSP(CityNum, inn, gnMax, crossProb,muteProb,unit_cost) 
 % CityNum = 50; % 城市数目，可以选 10, 30, 51, 75
 [dislist, Clist] = tsp(CityNum,unit_cost); % dislist 为城市之间相互的距离，Clist 为各城市的坐标
  
@@ -53,7 +53,7 @@ legend('最优解', '平均解');
 fprintf('遗传算法得到的最低费用: %.2f\n', bestValue);
 fprintf('遗传算法得到的最佳路线');
 disp(bestRoute(index, :));
-judge = 1;
+best_route =  bestRoute(index, :);
 end
 
  

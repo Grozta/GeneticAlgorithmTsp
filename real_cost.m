@@ -17,7 +17,6 @@ comm_latitude = total_2/n;
 one_langitude = (2*(radius*cos(comm_langitude/360* 2* pi))*pi)/360; % 经度转公里
 one_latitude = (2*(radius*cos(comm_latitude/360* 2* pi))*pi)/360; % 纬度转公里
 real_cost = (abs(city_pos.cur_info(i,1)-city_pos.cur_info(j,1))*one_langitude + abs(city_pos.cur_info(i,2)-city_pos.cur_info(j,2))*one_latitude)*unit_cost;
-disp(real_cost);
 % 曼哈顿距离
 end
 
