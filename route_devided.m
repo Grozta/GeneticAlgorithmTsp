@@ -3,11 +3,9 @@ function [ cur_info,remain_info] = route_devided( all_info_data )
 %   此处显示详细说明
 global vehicle;
 global center_position;
-%  ---- 不安全------
 if isempty(vehicle)||isempty(center_position)||isempty(all_info_data)
     return;
 end
-%  ---- 不安全------
 demand_count = size(all_info_data,1);
 add_head_col= (1:demand_count)';
 add_end_col = linspace(0,0,demand_count)';

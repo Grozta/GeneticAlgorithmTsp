@@ -4,6 +4,7 @@ if isempty(result_in)
 end
 global vehicle; 
 global center_position;
+global cur_info;
 % vehicle = [105 ,140]';
 % center_position = [108.969337,34.276048]';
 vehicle = result_in.vehicle';
@@ -27,7 +28,7 @@ unit_cost = result_in.unit_cost;% 单位费率
 % city_info = load('tsp_data');
 % all_info_data = all_info.all_info_data;
 all_info_data = result_in.all_info_data;
-save('all_info_data','all_info_data');
+% save('all_info_data','all_info_data');
 
 % 车辆分配
 [demend_vehicle,] = vehicle_distribution(all_info_data);
@@ -38,8 +39,8 @@ while demend_vehicle
 % 这个函数将线路根据车容量限制，划分成多条路线，将返回一条路线的信息
 center_info_one_row = [center_position' 0 0];
 cur_info = [center_info_one_row;cur_info];
-save('tsp_data','cur_info');
-save('all_info_data','all_info_data');
+% save('tsp_data','cur_info');
+% save('all_info_data','all_info_data');
 length = size(cur_info,1);
 % 路径优化-------
 cur_best_route = GaTSP(length, inn, gnMax, crossProb, muteProb, unit_cost);

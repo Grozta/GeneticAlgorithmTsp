@@ -1,28 +1,16 @@
-function result_out = main(vehicle_info,center_position_info, all_info_data_info)
-% if vehicle_info||center_position_info||all_info_data_info
-%     return;
-% end
+function  result_out = main(vehicle_info,center_position_info, all_info_data_info)
 global vehicle; 
 global center_position;
 global all_info_data;
 global cur_info;
-% vehicle = [105 ,140]';
-% center_position = [108.969337,34.276048]';
 vehicle = vehicle_info';
-
 center_position = center_position_info';
-
-
-inn = 50; % 初始种群大小
-gnMax = 200;  % 最大代数
+inn = 100; % 初始种群大小
+gnMax = 50;  % 最大代数
 crossProb = 0.8; % 交叉概率
-muteProb = 0.25; % 变异概率
+muteProb = 0.55; % 变异概率
 unit_cost = 2.1;% 单位费率 
-
-
-
 all_info_data = all_info_data_info;
-
 cur_info = [];
 % 车辆分配
 [demend_vehicle,] = vehicle_distribution(all_info_data);
@@ -41,16 +29,18 @@ cur_best_route = GaTSP(length, inn, gnMax, crossProb, muteProb, unit_cost);
 % 这函数将tsp路线进行优化
 
 
-% result_out.vehicle = vehicle;% [223,435]
-% result_out.remind_all_info = all_info_data;
+result_out.vehicle = vehicle;% [223,435]
+result_out.remind_all_info = all_info_data;
 result_out.tsp(count).best_route = cur_best_route;
 result_out.tsp(count).route_info = cur_info;
+% result_out.tsp(1).best_route = cur_best_route;
+% result_out.tsp(1).route_info = cur_info;
 
+% route_info = [route_info cur_info];
 demend_vehicle = demend_vehicle - 1;
 count = count + 1;
 end
-res_vehicle = vehicle;
-remind_all_info = all_info_data;
+
 
 end
 %-------------------------------------------------------------------------------------------------%
@@ -146,18 +136,9 @@ end
          break;
      end
  end
- 
+
 cur_info = new_all_info_data(1:flag -1,2:5);
 remain_info = new_all_info_data(flag:size(new_all_info_data,1),2:5);
-
-
-% 选择需求重心
-% 测试代码
-% x = new_all_info_data(:,2) -center_position(1);
-% y = new_all_info_data(:,3)-center_position(2);
-% figuer(7);
-% scatter(x,  y ,'r.');
-% disp(new_all_info_data);
 
 end
 
@@ -208,19 +189,21 @@ while generationNum < gnMax + 1
    generationMaxValue(generationNum) = 1 / fmax;  % 记录最短距离  
    bestChromo = population(nmax, :);  % 前代最佳染色体，即对应的路径
    bestRoute(generationNum, :) = bestChromo; % 记录每一代的最佳染色体
-   drawTSP(Clist, bestChromo, generationMaxValue(generationNum), generationNum, 0);
+   
+   
+   %drawTSP(Clist, bestChromo, generationMaxValue(generationNum), generationNum, 0);
    generationNum = generationNum + 1;
 end
 [bestValue,index] = min(generationMaxValue);
-drawTSP(Clist, bestRoute(index, :), bestValue, index,1);
+%drawTSP(Clist, bestRoute(index, :), bestValue, index,1);
  
-figure(2);
-plot(generationMaxValue, 'r');  
-hold on;
-plot(generationMeanValue, 'b'); 
-grid;
-title('搜索过程');
-legend('最优解', '平均解');
+% figure(2);
+% plot(generationMaxValue, 'r');  
+% hold on;
+% plot(generationMeanValue, 'b'); 
+% grid;
+% title('搜索过程');
+% legend('最优解', '平均解');
 fprintf('遗传算法得到的最低费用: %.2f\n', bestValue);
 fprintf('遗传算法得到的最佳路线');
 disp(bestRoute(index, :));
@@ -407,13 +390,13 @@ end
 function drawTSP(Clist, route, generationValue, generationNum,isBestGeneration)
 CityNum = size(Clist, 1);
 for i = 1 : CityNum - 1
-    plot([Clist(route(i), 1),Clist(route(i + 1), 1)], [Clist(route(i),2),Clist(route(i+1),2)],'ms-','LineWidth',2,'MarkerEdgeColor','k','MarkerFaceColor','g');
+     plot([Clist(route(i), 1),Clist(route(i + 1), 1)], [Clist(route(i),2),Clist(route(i+1),2)],'ms-','LineWidth',2,'MarkerEdgeColor','k','MarkerFaceColor','g');
     text(Clist(route(i), 1),Clist(route(i), 2), ['  ', int2str(route(i))]);
     text(Clist(route(i+1), 1),Clist(route(i + 1), 2), ['  ', int2str(route(i+1))]);
     hold on;
 end
-plot([Clist(route(CityNum), 1), Clist(route(1), 1)], [Clist(route(CityNum), 2), Clist(route(1), 2)],'ms-','LineWidth',2,'MarkerEdgeColor','k','MarkerFaceColor','g');
-title([num2str(CityNum),'城市TSP']);
+ plot([Clist(route(CityNum), 1), Clist(route(1), 1)], [Clist(route(CityNum), 2), Clist(route(1), 2)],'ms-','LineWidth',2,'MarkerEdgeColor','k','MarkerFaceColor','g');
+ title([num2str(CityNum),'城市TSP']);
 if isBestGeneration == 0 && CityNum ~= 10
     text(5, 5, ['第 ',int2str(generationNum),' 代','  最低费用为 ', num2str(generationValue)]);
 else

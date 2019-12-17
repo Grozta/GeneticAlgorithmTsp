@@ -1,9 +1,10 @@
 function [ lt_cost ] = LTcost( j )
 %UNTITLED5 此处显示有关此函数的摘要
 %   此处显示详细说明
+global cur_info;
 value = 2.1; %这里是延迟到货费用因子
-city_pos = load('tsp_data');
-data = city_pos.cur_info;
+
+data = cur_info;
 std_deviation = std(data,0,1);
 agv = mean(data,1);
 std_deviation_demand = std_deviation(3);
